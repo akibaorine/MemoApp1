@@ -20,7 +20,7 @@ const  List= () :JSX.Element => {
 
         </View>
         <CircleButton style={{top:160,bottom:'auto'}}>
-            <Icon />
+            <Icon name='plus' size={40} color='#ffffff'/>
         </CircleButton>
         
 
