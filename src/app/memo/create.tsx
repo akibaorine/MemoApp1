@@ -3,12 +3,12 @@ import { Header } from "react-native/Libraries/NewAppScreen";
 import CircleButton from "../../components/CircleButton";
 import Icon from "../../components/icon";
 
-const Edit = ():JSX.Element =>{
+const Create = ():JSX.Element =>{
     return(
         <KeyboardAvoidingView behavior="height" style={styles.container}>
             <Header />
             <View style={styles.inputContainer}>
-                <TextInput multiline style={styles.input} value={'買い物\nリスト'} />
+                <TextInput multiline style={styles.input} value='' />
             </View>
             <CircleButton style={{top:160,bottom:'auto'}}>
                 <Icon name='check' size={40} color='#ffffff' />
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Edit
+export default Create
