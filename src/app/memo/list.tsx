@@ -1,9 +1,8 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, StyleSheet } from "react-native"
 
 import Header from "../../components/Header"
 import MemoListItem from "../../components/MemoListItem"
 import CircleButton from "../../components/CircleButton"
-import { Feather } from "@expo/vector-icons"
 import Icon from "../../components/icon"
 
 const  List= () :JSX.Element => {
