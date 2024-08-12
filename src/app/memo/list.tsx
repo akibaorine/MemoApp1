@@ -9,16 +9,12 @@ const  List= () :JSX.Element => {
     return(
         <View style = {styles.container}>
             <Header />
-    
-
         <View>
             <MemoListItem />
             <MemoListItem />
             <MemoListItem />
-        
-
         </View>
-        <CircleButton style={{top:160,bottom:'auto'}}>
+        <CircleButton style={{top:700,bottom:'auto'}}>
             <Icon name='plus' size={40} color='#ffffff'/>
         </CircleButton>
         
