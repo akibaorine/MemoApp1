@@ -1,4 +1,6 @@
 import { View, Text, TextInput, StyleSheet,TouchableOpacity } from "react-native"
+
+import { Link } from "expo-router"
 import Header from "../../components/Header"
 import Button from "../../components/Button"
 
@@ -15,9 +17,12 @@ const SignUp = ():JSX.Element => {
 
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>Already registered?</Text>
+                    <Link href='/auth/sign_up' asChild>
                     <TouchableOpacity>
                     <Text style={styles.footerLink}>Log in.</Text>
                     </TouchableOpacity>
+                    </Link>
+
                 </View>
 
 
