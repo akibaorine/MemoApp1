@@ -1,10 +1,13 @@
 import { View,Text,StyleSheet,TouchableOpacity } from "react-native";
 
+import {Link} from 'expo-router'
+
 import Icon from './icon'
 
 const MemoListItem = ():JSX.Element => {
     return(
-        <View style={styles.memoListItem}>
+        <Link href='/memo/detail'asChild>
+        <TouchableOpacity style={styles.memoListItem}>
               <View>
                 <Text style={styles.memoListItemTitile}>買い物リスト</Text>
                 <Text style={styles.memoListItemDate}>2023年10月1日10:00</Text>
@@ -12,7 +15,8 @@ const MemoListItem = ():JSX.Element => {
               <TouchableOpacity>
                 <Icon name='delete' size={32} color='#B0B0B0' />
               </TouchableOpacity>
-             </View>
+             </TouchableOpacity>
+             </Link>
 
     )
 }
