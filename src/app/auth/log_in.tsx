@@ -25,6 +25,7 @@ const LogIn = ():JSX.Element => {
                  autoCapitalize="none"
                  keyboardType="email-address"
                  placeholder='Email Address'
+                 textContentType="emailAddress"
                  />
                 <TextInput 
                 style={styles.input} 
@@ -33,6 +34,7 @@ const LogIn = ():JSX.Element => {
                 autoCapitalize="none"
                 secureTextEntry
                 placeholder="Password"
+                textContentType="password"
                 />
                 <Button label='Submit' onPress={handlePress}/>
         
