@@ -1,4 +1,4 @@
-import { View,Text,  StyleSheet } from "react-native"
+import { View,Text,  StyleSheet,FlatList } from "react-native"
 import {collection, onSnapshot,query,orderBy} from 'firebase/firestore'
 
 import MemoListItem from "../../components/MemoListItem"
@@ -27,7 +27,7 @@ const  List= () :JSX.Element => {
         if(auth.currentUser === null) {return}
         const ref = collection(db,`users/${auth.currentUser.uid}/memos`)
         console.log('Query path:', `users/${auth.currentUser.uid}/memos`)
-        const q = query(ref)
+        const q = query(ref, orderBy('updatedAt','desc'))
         console.log('Query created',ref.path)
         const unsubscribe = onSnapshot(q,(snapshot) => {
             if(snapshot.empty) {
@@ -55,11 +55,11 @@ const  List= () :JSX.Element => {
     
     return(
         <View style = {styles.container}>
+            <FlatList 
+            data={memos}
+            renderItem={({item}) =>  <MemoListItem memo = {item} />} 
+            />
 
-        <View>
-         {memos.map((memo) => <MemoListItem memo={memo} />)}
-           
-        </View>
         <CircleButton style={{top:650,bottom:'auto'}} onPress={handlePress}>
             <Icon name='plus' size={40} color='#ffffff'/>
         </CircleButton>

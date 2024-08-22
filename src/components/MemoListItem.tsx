@@ -10,17 +10,19 @@ interface Props {
     memo:Memo
 }
 
-const MemoListItem = (props:Props):JSX.Element => {
+const MemoListItem = (props:Props):JSX.Element | null => {
     const {memo} =props
+    const {bodyText,updatedAt} = memo
+    if (bodyText === null || updatedAt === null) {return null}
     const dateString = memo.updatedAt instanceof Timestamp
-    ? memo.updatedAt.toDate().toLocaleString('ja-JP')
+    ? updatedAt.toDate().toLocaleString('ja-JP')
     : 'Date not available'
-    
+
     return(
         <Link href='/memo/detail'asChild>
         <TouchableOpacity style={styles.memoListItem}>
               <View>
-                <Text style={styles.memoListItemTitile}>{memo.bodyText}</Text>
+                <Text numberOfLines={1} style={styles.memoListItemTitile}>{bodyText}</Text>
                 <Text style={styles.memoListItemDate}>{dateString}</Text>
               </View>  
               <TouchableOpacity>
