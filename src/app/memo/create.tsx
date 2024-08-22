@@ -1,7 +1,8 @@
-import { View, TextInput ,StyleSheet, KeyboardAvoidingView} from "react-native";
+import { View, TextInput ,StyleSheet} from "react-native";
 import CircleButton from "../../components/CircleButton";
 import Icon from "../../components/icon";
 import { router } from "expo-router";
+import KeyboardAvoidingView from "../../components/KeyboardAvoidingView";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { db,auth } from "../../config"; 
 import { useState } from "react";
@@ -26,7 +27,7 @@ const handlePress= (bodyText:string):void =>{
 const Create = ():JSX.Element =>{
     const [bodyText,setBodyText] = useState('')
     return(
-        <KeyboardAvoidingView behavior="height" style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}>
 
             <View style={styles.inputContainer}>
                 <TextInput
@@ -34,6 +35,7 @@ const Create = ():JSX.Element =>{
                  style={styles.input} 
                  value={bodyText}
                  onChangeText={(text) => {setBodyText(text)}}
+                 autoFocus
                  
                  />
             </View>
