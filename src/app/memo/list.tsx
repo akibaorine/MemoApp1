@@ -38,8 +38,7 @@ const  List= () :JSX.Element => {
             const remoteMemos:Memo[] = []
             snapshot.forEach((doc) => {
                 
-                console.log('memo:',doc.data())
-                const {bodyText, updatedAt} = doc.data()
+                              const {bodyText, updatedAt} = doc.data()
                 remoteMemos.push({
                     id:doc.id,
                     bodyText,

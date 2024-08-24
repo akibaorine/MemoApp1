@@ -1,15 +1,21 @@
 import { View, Text,ScrollView, StyleSheet } from "react-native"
-import {router} from 'expo-router'
+import {router, useLocalSearchParams} from 'expo-router'
+import { onSnapshot,doc } from "firebase/firestore"
+import { useState, useEffect } from "react"
 
 
 import CircleButton from "../../components/CircleButton"
 import Icon from "../../components/icon"
+import { auth,db } from "../../config"
+import { type Memo } from "../../../types/memo"
 
 const handlePress = ():void => {
     router.push('/memo/edit')
 }
 
 const Detail = ():JSX.Element => {
+    const {id} = useLocalSearchParams()
+    console.log(id)
     return(
         <View style={styles.container}>
 
