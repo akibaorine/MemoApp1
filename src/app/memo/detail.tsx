@@ -9,29 +9,42 @@ import Icon from "../../components/icon"
 import { auth,db } from "../../config"
 import { type Memo } from "../../../types/memo"
 
-const handlePress = ():void => {
-    router.push('/memo/edit')
+const handlePress = (id:string):void => {
+    router.push({pathname: '/memo/edit',params:{id}})
 }
 
 const Detail = ():JSX.Element => {
-    const {id} = useLocalSearchParams()
+    const id = String(useLocalSearchParams().id)
     console.log(id)
+    const [memo,setMemo] = useState<Memo | null>(null)
+    useEffect(() =>{
+        if(auth.currentUser === null) {return}
+        const ref = doc(db, `users/${auth.currentUser.uid}/memos`,id)
+        const unsubscribe = onSnapshot(ref,(memoDoc) => {
+            const {bodyText,updatedAt} = memoDoc.data() as Memo
+            setMemo({
+                id:memoDoc.id,
+                bodyText,
+                updatedAt
+            })
+        })
+        return unsubscribe
+    },[])
+
+    
     return(
         <View style={styles.container}>
 
         <View style={styles.memoHeader}>
-         <Text style={styles.memoTitle}>買い物リスト</Text>
-         <Text style={styles.memoDate}>2023年10月1日</Text>
+         <Text style={styles.memoTitle} numberOfLines={1}>{memo?.bodyText}</Text>
+         <Text style={styles.memoDate}>{memo?.updatedAt?.toDate().toLocaleDateString('ja-JP')}</Text>
         </View>
         <ScrollView style={styles.memoBody}>
             <Text style={styles.memoBodyText}>
-                買い物リスト
-                書体やレイアウトなどを確認するために用います
-                本文用なので使い方を間違えると不自然に見えることもあるため要注意
-
+                {memo?.bodyText}
             </Text>
         </ScrollView>
-        <CircleButton onPress={handlePress} style={{top:60,bottom:'auto'}}>
+        <CircleButton onPress= {() => {handlePress(id)}} style={{top:60,bottom:'auto'}}>
         <Icon name='pencil' size={40} color='#ffffff'/>
         </CircleButton>
         </View>
@@ -66,11 +79,12 @@ const styles = StyleSheet.create({
 
     },
     memoBody:{
-        paddingVertical:32,
+        
         paddingHorizontal:27
 
     },
     memoBodyText:{
+        paddingVertical:32,
         fontSize:16,
         lineHeight:24,
         color:'#000000'
