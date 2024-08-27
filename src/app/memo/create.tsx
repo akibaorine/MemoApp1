@@ -39,7 +39,7 @@ const Create = ():JSX.Element =>{
                  
                  />
             </View>
-            <CircleButton style={{top:50,bottom:'auto'}} onPress={() => {handlePress(bodyText)}}>
+            <CircleButton style={{top:650,bottom:'auto'}} onPress={() => {handlePress(bodyText)}}>
                 <Icon name='check' size={40} color='#ffffff' />
             </CircleButton>
 

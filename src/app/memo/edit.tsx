@@ -54,7 +54,7 @@ const Edit = ():JSX.Element =>{
                 autoFocus
                 />
             </View>
-            <CircleButton style={{top:650,bottom:'auto'}} onPress= {() => {handlePress(id,bodyText)}}>
+            <CircleButton style={{top:65,bottom:'auto'}} onPress= {() => {handlePress(id,bodyText)}}>
                 <Icon name='check' size={40} color='#ffffff' />
             </CircleButton>
 
