@@ -1,6 +1,6 @@
 import { View,Text,StyleSheet,TouchableOpacity,Alert } from 'react-native'
 
-import {Link} from 'expo-router'
+import {Link, router, useLocalSearchParams} from 'expo-router'
 import { deleteDoc,doc } from 'firebase/firestore'
 
 import Icon from './icon'
@@ -32,7 +32,13 @@ const handlePress = (id:string):void => {
 
 }
 
+const handlePress2 = (id:string):void => {
+    router.push({pathname: '/memo/edit',params:{id}})
+}
+
+
 const MemoListItem = (props:Props):JSX.Element | null => {
+    const id = String(useLocalSearchParams().id)
     const {memo} =props
     const {bodyText,updatedAt} = memo
     if (bodyText === null || updatedAt === null) {return null}
@@ -49,10 +55,19 @@ const MemoListItem = (props:Props):JSX.Element | null => {
               <View>
                 <Text numberOfLines={1} style={styles.memoListItemTitile}>{bodyText}</Text>
                 <Text style={styles.memoListItemDate}>{dateString}</Text>
-              </View>  
+              </View> 
+
+              <View style = {styles.iconContainer}>
+                <TouchableOpacity onPress = {() => {handlePress2(id)}} >
+                    <View style={styles.iconBox}>
+                <Icon name='pencil' size={50} color='#B0B0B0' />
+                </View>
+                </TouchableOpacity>
               <TouchableOpacity onPress = {() => {handlePress(memo.id)}}>
+              
                 <Icon name='delete' size={32} color='#B0B0B0' />
               </TouchableOpacity>
+              </View>
              </TouchableOpacity>
              </Link>
 
@@ -78,6 +93,14 @@ const styles = StyleSheet.create({
         fontSize:12,
         lineHeight:16,
         color:'#848484'
+    },
+    iconContainer:{
+        flexDirection:'row'
+    },
+    iconBox:{
+        backgroundColor:'#D3D3D3',
+        padding:1,
+        borderRadius:8
     }
 
 })
