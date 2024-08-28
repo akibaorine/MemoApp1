@@ -74,7 +74,7 @@ const SignUp = ():JSX.Element => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'#F0F4F8'
+        backgroundColor:'#F0F8FF'
     },
     inner:{
         paddingVertical:24,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
      footerLink:{
         fontSize:14,
         lineHeight:24,
-        color:'#467FD3'
+        color:'#48D1CC'
      }
 })
 export default SignUp
