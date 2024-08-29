@@ -1,12 +1,15 @@
-import { View,Text,StyleSheet,TouchableOpacity,Alert } from 'react-native'
+import { View,Text,StyleSheet,TouchableOpacity,Alert, Image, Button } from 'react-native'
 
 import {Link, router, useLocalSearchParams} from 'expo-router'
 import { deleteDoc,doc } from 'firebase/firestore'
-
+import *as ImagePicker from 'expo-image-picker'
 import Icon from './icon'
 import {type Memo } from '../../types/memo'
 import { Timestamp } from 'firebase/firestore'
 import { auth,db } from '../config'
+import { useState } from 'react'
+import ImagePickerExample from './ImagePickerExample'
+
 
 interface Props {
     memo:Memo
@@ -36,6 +39,27 @@ const handlePress2 = (id:string):void => {
     router.push({pathname: '/memo/edit',params:{id}})
 }
 
+const EditIconScreen = () => {
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  
+    const pickImage = async () => {
+      // メディアライブラリへのアクセス権を要求
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+  
+      if (!result.canceled) {
+        setSelectedImage(result.assets[0].uri); // 選択した画像のURIを保存
+      }
+    };
+  
+
+  };
+  
+
 
 const MemoListItem = (props:Props):JSX.Element | null => {
     const id = String(useLocalSearchParams().id)
@@ -52,6 +76,9 @@ const MemoListItem = (props:Props):JSX.Element | null => {
         asChild
         >
         <TouchableOpacity style={styles.memoListItem}>
+            <View>
+                <ImagePickerExample />
+            </View>
             <View style={styles.contentContainer}>
               <View style = {styles.textContainer}>
                 <Text numberOfLines={1} style={styles.memoListItemTitile}>{bodyText}</Text>
@@ -77,6 +104,11 @@ const MemoListItem = (props:Props):JSX.Element | null => {
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center'
+    },
     memoListItem:{
         backgroundColor:'#F0F8FF',
         flexDirection:'row',
@@ -119,6 +151,12 @@ const styles = StyleSheet.create({
         backgroundColor:'#D3D3D3',
         padding:1,
         borderRadius:8
+    },
+    previewImage:{
+        width:50,
+        height:50,
+        borderRadius:8,
+        marginRight:10
     }
 
 })
