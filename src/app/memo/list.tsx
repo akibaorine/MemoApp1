@@ -73,7 +73,7 @@ const  List= () :JSX.Element => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'#ffffff'
+        backgroundColor:'#F0F8FF'
     },
    
    

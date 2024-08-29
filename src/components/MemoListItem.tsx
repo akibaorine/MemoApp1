@@ -52,7 +52,8 @@ const MemoListItem = (props:Props):JSX.Element | null => {
         asChild
         >
         <TouchableOpacity style={styles.memoListItem}>
-              <View>
+            <View style={styles.contentContainer}>
+              <View style = {styles.textContainer}>
                 <Text numberOfLines={1} style={styles.memoListItemTitile}>{bodyText}</Text>
                 <Text style={styles.memoListItemDate}>{dateString}</Text>
               </View> 
@@ -63,6 +64,7 @@ const MemoListItem = (props:Props):JSX.Element | null => {
                 <Icon name='pencil' size={50} color='#B0B0B0' />
                 </View>
                 </TouchableOpacity>
+                </View>
               <TouchableOpacity onPress = {() => {handlePress(memo.id)}}>
               
                 <Icon name='delete' size={32} color='#B0B0B0' />
@@ -76,18 +78,34 @@ const MemoListItem = (props:Props):JSX.Element | null => {
 
 const styles = StyleSheet.create({
     memoListItem:{
-        backgroundColor:'#ffffff',
+        backgroundColor:'#F0F8FF',
         flexDirection:'row',
         justifyContent:'space-between',
         paddingVertical:16,
         paddingHorizontal:19,
         alignItems:'center',
         borderBottomWidth:1,
-        borderColor:'rgba(0,0,0,0.15)'
+        borderColor:'rgba(0,0,0,0.15)',
+        
+
+    },
+    contentContainer:{
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'flex-end',
+        flex:1
+    },
+    textContainer:{
+        backgroundColor:'#FFFFFF',
+        padding:5,
+        borderRadius:4,
+        borderBlockColor:'#E0E0E0',
+        width:150,
+        marginRight:10
     },
     memoListItemTitile:{
-        fontSize:16,
-        lineHeight:32
+        fontSize:12,
+        lineHeight:20
     },
     memoListItemDate:{
         fontSize:12,
