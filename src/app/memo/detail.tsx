@@ -45,7 +45,7 @@ const Detail = ():JSX.Element => {
             </Text>
         </ScrollView>
         <CircleButton onPress= {() => {handlePress(id)}} style={{top:60,bottom:'auto'}}>
-        <Icon name='pencil' size={40} color='#ffffff'/>
+        <Icon name='pencil' size={35} color='#ffffff'/>
         </CircleButton>
         </View>
 
@@ -56,10 +56,10 @@ const Detail = ():JSX.Element => {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'#ffffff'
+        backgroundColor:'#F0F8FF'
     },
     memoHeader:{
-        backgroundColor:'#467FD3',
+        backgroundColor:'#48D1CC',
         height:96,
         justifyContent:'center',
         paddingVertical:24,
