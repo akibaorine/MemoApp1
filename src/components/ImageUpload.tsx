@@ -1,51 +1,43 @@
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "../config/firebase"; // 正しいパスに修正
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { Button, View, Image } from "react-native";
-import { useState } from "react";
+import { uploadImageAsync, saveImageUrlToMemo } from '../utils/firebaseStorage';
 
-const ImageUpload = () => {
-    const [image, setImage] = useState<string | null>(null);
+const ImageUpload = ({ memoId }: { memoId: string }) => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    const pickImage = async () => {
-        // 画像を選択
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
 
-        if (!result.canceled) {
-            const uri = result.assets[0].uri;
-            setImage(uri);
-            const imageUrl = await uploadImageAsync(uri);
-            await saveImageToFirestore(imageUrl);
-        }
-    };
+    if (!result.canceled) {
+      const uri = result.assets[0].uri;
+      try {
+        const uploadUrl = await uploadImageAsync(uri);
+        setSelectedImage(uploadUrl);
+        await saveImageUrlToMemo(memoId, uploadUrl);
+        Alert.alert('成功', '画像がアップロードされ、メモに保存されました。');
+      } catch (error) {
+        Alert.alert('エラー', '画像のアップロードに失敗しました。');
+        console.error('Error uploading image:', error);
+      }
+    }
+  };
 
-    const uploadImageAsync = async (uri: string): Promise<string> => {
-        const blob = await fetch(uri).then(r => r.blob());
-        const storage = getStorage();
-        const storageRef = ref(storage, `images/${auth.currentUser?.uid}/${Date.now()}`);
-        await uploadBytes(storageRef, blob);
-        return await getDownloadURL(storageRef);
-    };
-
-    const saveImageToFirestore = async (imageURL: string) => {
-        if (!auth.currentUser) return;
-
-        const userRef = doc(db, "users", auth.currentUser.uid);
-        await setDoc(userRef, { profileImage: imageURL }, { merge: true });
-    };
-
-    return (
-        <View>
-            <Button title="画像を選択" onPress={pickImage} />
-            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-        </View>
-    );
+  return (
+    <View>
+      <TouchableOpacity onPress={pickImage}>
+        <Text>画像を選択</Text>
+      </TouchableOpacity>
+      {selectedImage && (
+        <Image source={{ uri: selectedImage }} style={{ width: 100, height: 100 }} />
+      )}
+    </View>
+  );
 };
 
 export default ImageUpload;
